@@ -1,0 +1,180 @@
+{
+  "categories": [
+    {
+      "id": "appearance",
+      "label": "1. General Appearance",
+      "options": [
+        "Well-groomed",
+        "Disheveled / unkempt",
+        "Malodorous",
+        "Appears stated age",
+        "Appears older than stated age",
+        "Appears younger than stated age",
+        "Appropriate attire for weather/situation",
+        "Inappropriate attire",
+        "Underweight",
+        "Overweight / obese",
+        "Distinctive features (tattoos, scars, etc.)"
+      ]
+    },
+    {
+      "id": "behavior",
+      "label": "2. Behavior / Psychomotor Activity",
+      "options": [
+        "Cooperative",
+        "Calm",
+        "Agitated",
+        "Restless",
+        "Psychomotor retardation",
+        "Psychomotor agitation",
+        "Guarded / evasive",
+        "Withdrawn",
+        "Hyperactive",
+        "Lethargic",
+        "Poor eye contact",
+        "Appropriate eye contact",
+        "Abnormal movements (tics, tremors, pacing)"
+      ]
+    },
+    {
+      "id": "speech",
+      "label": "3. Speech",
+      "options": [
+        "Normal rate, tone, and volume",
+        "Pressured",
+        "Rapid",
+        "Slow",
+        "Loud",
+        "Soft",
+        "Monotone",
+        "Slurred",
+        "Mute / minimally verbal",
+        "Poverty of speech"
+      ]
+    },
+    {
+      "id": "mood",
+      "label": "4. Mood (subjective)",
+      "options": [
+        "Anxious",
+        "Depressed",
+        "Sad",
+        "Angry / Irritable",
+        "Happy",
+        "Euphoric"
+      ],
+      "allowCustom": true
+    },
+    {
+      "id": "affect",
+      "label": "5. Affect (objective)",
+      "options": [
+        "Restricted",
+        "Blunted",
+        "Flat",
+        "Labile",
+        "Appropriate",
+        "Incongruent with mood"
+      ]
+    },
+    {
+      "id": "thoughtProcess",
+      "label": "6. Thought Process (form)",
+      "options": [
+        "Linear",
+        "Goal-directed",
+        "Circumstantial",
+        "Tangential",
+        "Flight of ideas",
+        "Loose associations",
+        "Disorganized",
+        "Thought blocking",
+        "Perseverative"
+      ]
+    },
+    {
+      "id": "thoughtContent",
+      "label": "7. Thought Content",
+      "options": [
+        "No delusions",
+        "Delusions: Paranoid",
+        "Delusions: Grandiose",
+        "Delusions: Persecutory",
+        "Delusions: Religious",
+        "Delusions: Somatic",
+        "Obsessions/Pre-occupation",
+        "Paranoia",
+        "Suicidal ideation (passive/active)",
+        "Homicidal ideation",
+        "Thought insertion/thought broadcasting"
+      ]
+    },
+    {
+      "id": "perception",
+      "label": "8. Perception",
+      "options": [
+        "No hallucinations",
+        "Auditory hallucinations",
+        "Visual hallucinations",
+        "Tactile hallucinations",
+        "Olfactory hallucinations",
+        "Illusions",
+        "Depersonalization",
+        "Derealization"
+      ]
+    },
+    {
+      "id": "cognition",
+      "label": "9. Cognition",
+      "options": [
+        "Alert and oriented ×4 (person, place, time, situation)",
+        "Alert and oriented ×3",
+        "Alert and oriented ×2",
+        "Impaired attention/concentration",
+        "Memory: Intact (recent/remote)",
+        "Memory: Impaired",
+        "Distractible"
+      ]
+    },
+    {
+      "id": "insight",
+      "label": "10. Insight",
+      "options": [
+        "Good",
+        "Fair",
+        "Poor",
+        "Limited",
+        "Absent"
+      ]
+    },
+    {
+      "id": "judgment",
+      "label": "11. Judgment",
+      "options": [
+        "Good",
+        "Fair",
+        "Poor",
+        "Impaired"
+      ]
+    },
+    {
+      "id": "impulseControl",
+      "label": "12. Impulse Control",
+      "options": [
+        "Good",
+        "Fair",
+        "Poor",
+        "Impaired"
+      ]
+    },
+    {
+      "id": "reliability",
+      "label": "13. Reliability",
+      "options": [
+        "Good historian",
+        "Fair historian",
+        "Poor historian"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,483 @@
+{
+  "mseCategories": [
+    {
+      "id": "appearance",
+      "label": "1. General Appearance",
+      "options": [
+        "Well-groomed",
+        "Disheveled / unkempt",
+        "Malodorous",
+        "Appears stated age",
+        "Appears older than stated age",
+        "Appears younger than stated age",
+        "Appropriate attire for weather/situation",
+        "Inappropriate attire",
+        "Underweight",
+        "Overweight / obese"
+      ]
+    },
+    {
+      "id": "behavior",
+      "label": "2. Behavior / Psychomotor Activity",
+      "options": [
+        "Cooperative",
+        "Calm",
+        "Agitated",
+        "Restless",
+        "Psychomotor retardation",
+        "Psychomotor agitation",
+        "Guarded / evasive",
+        "Withdrawn",
+        "Hyperactive",
+        "Lethargic",
+        "Poor eye contact",
+        "Appropriate eye contact",
+        "Abnormal movements (tics, tremors, pacing)"
+      ]
+    },
+    {
+      "id": "speech",
+      "label": "3. Speech",
+      "options": [
+        "Normal rate, tone, and volume",
+        "Pressured",
+        "Rapid",
+        "Slow",
+        "Loud",
+        "Soft",
+        "Monotone",
+        "Slurred",
+        "Mute / minimally verbal",
+        "Poverty of speech"
+      ]
+    },
+    {
+      "id": "mood",
+      "label": "4. Mood",
+      "options": [
+        "Anxious",
+        "Depressed",
+        "Sad",
+        "Angry / Irritable",
+        "Happy",
+        "Euphoric"
+      ],
+      "allowCustom": true
+    },
+    {
+      "id": "affect",
+      "label": "5. Affect",
+      "options": [
+        "Restricted",
+        "Blunted",
+        "Flat",
+        "Labile",
+        "Appropriate",
+        "Incongruent with mood"
+      ]
+    },
+    {
+      "id": "thoughtProcess",
+      "label": "6. Thought Process",
+      "options": [
+        "Linear",
+        "Goal-directed",
+        "Circumstantial",
+        "Tangential",
+        "Flight of ideas",
+        "Loose associations",
+        "Disorganized",
+        "Thought blocking",
+        "Perseverative"
+      ]
+    },
+    {
+      "id": "thoughtContent",
+      "label": "7. Thought Content",
+      "options": [
+        "No delusions",
+        "Delusions: Paranoid",
+        "Delusions: Grandiose",
+        "Delusions: Persecutory",
+        "Delusions: Religious",
+        "Delusions: Somatic",
+        "Obsessions/Pre-occupation",
+        "Paranoia",
+        "Suicidal ideation",
+        "Homicidal ideation",
+        "Thought insertion/thought broadcasting"
+      ]
+    },
+    {
+      "id": "perception",
+      "label": "8. Perception",
+      "options": [
+        "No hallucinations",
+        "Auditory hallucinations",
+        "Visual hallucinations",
+        "Tactile hallucinations",
+        "Olfactory hallucinations",
+        "Illusions",
+        "Depersonalization",
+        "Derealization"
+      ]
+    },
+    {
+      "id": "cognition",
+      "label": "9. Cognition",
+      "options": [
+        "Alert and oriented ×4 (person, place, time, situation)",
+        "Alert and oriented ×3",
+        "Alert and oriented ×2",
+        "Impaired attention/concentration",
+        "Memory: Intact (recent/remote)",
+        "Memory: Impaired",
+        "Distractible"
+      ]
+    },
+    {
+      "id": "insight",
+      "label": "10. Insight",
+      "options": [
+        "Good",
+        "Fair",
+        "Poor",
+        "Limited",
+        "Absent"
+      ]
+    },
+    {
+      "id": "judgment",
+      "label": "11. Judgment",
+      "options": [
+        "Good",
+        "Fair",
+        "Poor",
+        "Impaired"
+      ]
+    },
+    {
+      "id": "impulseControl",
+      "label": "12. Impulse Control",
+      "options": [
+        "Good",
+        "Fair",
+        "Poor",
+        "Impaired"
+      ]
+    },
+    {
+      "id": "reliability",
+      "label": "13. Reliability",
+      "options": [
+        "Good historian",
+        "Fair historian",
+        "Poor historian"
+      ]
+    }
+  ],
+  "rosCategories": [
+    {
+      "id": "depression",
+      "label": "Depression",
+      "options": [
+        "Low mood",
+        "Anhedonia (loss of interest)",
+        "Hopelessness",
+        "Helplessness",
+        "Worthlessness",
+        "Excessive guilt",
+        "Low energy / fatigue",
+        "Poor concentration",
+        "Psychomotor retardation",
+        "Crying spells",
+        "Social withdrawal"
+      ]
+    },
+    {
+      "id": "anxiety",
+      "label": "Anxiety",
+      "options": [
+        "Excessive worry",
+        "Restlessness / feeling on edge",
+        "Irritability",
+        "Muscle tension",
+        "Difficulty concentrating",
+        "Sleep disturbance",
+        "Easily fatigued",
+        "Racing thoughts"
+      ]
+    },
+    {
+      "id": "panic",
+      "label": "Panic Symptoms",
+      "options": [
+        "Palpitations/ Chest discomfort",
+        "Sweating",
+        "Trembling",
+        "Shortness of breath",
+        "Muscle tension",
+        "Nausea / abdominal distress",
+        "Dizziness / lightheadedness",
+        "Chills / heat sensations",
+        "Paresthesias (tingling)",
+        "Derealization / depersonalization",
+        "Excessive and uncontrollable worry",
+        "Phobia"
+      ]
+    },
+    {
+      "id": "mania",
+      "label": "Mania / Hypomania",
+      "options": [
+        "Elevated mood",
+        "Expansive mood",
+        "Irritability",
+        "Decreased need for sleep",
+        "Increased energy",
+        "Increased goal-directed activity",
+        "Racing thoughts / flight of ideas",
+        "Pressured speech",
+        "Distractibility",
+        "Impulsivity",
+        "Risky behaviors (spending, sex, substance use)",
+        "Grandiosity"
+      ]
+    },
+    {
+      "id": "psychosis",
+      "label": "Psychosis",
+      "options": [
+        "Auditory hallucinations",
+        "Visual hallucinations",
+        "Tactile hallucinations",
+        "Olfactory hallucinations",
+        "Delusions",
+        "Thought broadcasting",
+        "Thought insertion",
+        "Disorganized thinking",
+        "Paranoia"
+      ],
+      "nested": {
+        "Delusions": ["Paranoid", "Persecutory", "Grandiose", "Religious", "Somatic"]
+      }
+    },
+    {
+      "id": "sleep",
+      "label": "Sleep",
+      "options": [
+        "Insomnia – difficulty falling asleep",
+        "Insomnia – difficulty staying asleep",
+        "Early morning awakening",
+        "Hypersomnia",
+        "Nightmares",
+        "Restless sleep",
+        "Non-restorative sleep"
+      ]
+    },
+    {
+      "id": "appetite",
+      "label": "Appetite / Eating",
+      "options": [
+        "Decreased appetite",
+        "Increased appetite",
+        "Weight loss",
+        "Weight gain",
+        "Binge eating",
+        "Restrictive eating",
+        "Purging behaviors"
+      ]
+    },
+    {
+      "id": "cognition",
+      "label": "Cognition",
+      "options": [
+        "Memory impairment (short-term)",
+        "Memory impairment (long-term)",
+        "Poor concentration",
+        "Confusion",
+        "Disorientation",
+        "Word-finding difficulty"
+      ]
+    },
+    {
+      "id": "trauma",
+      "label": "Trauma / PTSD",
+      "options": [
+        "History of trauma",
+        "Intrusive thoughts",
+        "Flashbacks",
+        "Nightmares",
+        "Hypervigilance",
+        "Avoidance behaviors",
+        "Emotional numbing",
+        "Exaggerated startle response"
+      ]
+    },
+    {
+      "id": "ocd",
+      "label": "Obsessive-Compulsive Symptoms",
+      "options": [
+        "Intrusive thoughts (obsessions)",
+        "Compulsive behaviors",
+        "Checking",
+        "Cleaning / washing",
+        "Counting / rituals",
+        "Symmetry / order concerns"
+      ]
+    },
+    {
+      "id": "substance",
+      "label": "Substance Use",
+      "options": [
+        "Alcohol use",
+        "Cannabis use",
+        "Stimulant use",
+        "Opioid use",
+        "Sedative use",
+        "Increased tolerance",
+        "Withdrawal symptoms",
+        "Cravings"
+      ]
+    },
+    {
+      "id": "safety",
+      "label": "Safety",
+      "options": [
+        "Suicidal ideation",
+        "Homicidal ideation",
+        "Self-injurious behavior",
+        "Aggression",
+        "Access to means"
+      ],
+      "nested": {
+        "Suicidal ideation": ["Passive", "Active", "Plan", "Intent"]
+      }
+    },
+    {
+      "id": "behavioral",
+      "label": "Behavioral / Functional",
+      "options": [
+        "Social withdrawal",
+        "Impaired occupational functioning",
+        "Impaired ADLs",
+        "Poor motivation",
+        "Isolation",
+        "Relationship difficulties"
+      ]
+    }
+  ],
+  "planCategories": [
+    {
+      "id": "medications",
+      "label": "1. Medications",
+      "options": [
+        "Continue current medications",
+        "Initiate",
+        "Adjust dose (↑ / ↓)",
+        "Discontinue",
+        "Cross-taper to",
+        "PRN medication",
+        "Side effects reviewed",
+        "Medication adherence discussed"
+      ],
+      "hasText": ["Continue current medications", "Initiate", "Adjust dose (↑ / ↓)", "Discontinue", "Cross-taper to", "PRN medication"]
+    },
+    {
+      "id": "therapy",
+      "label": "2. Therapy / Psychosocial Interventions",
+      "options": [
+        "Psychotherapy",
+        "Reviewed coping skills",
+        "Provided support",
+        "C",
+        "Risk factor/Stress reduction strategies",
+        "Psychoeducation provided"
+      ],
+      "nested": {
+        "Psychotherapy": ["CBT", "DBT", "Trauma-focused therapy", "Supportive therapy"]
+      }
+    },
+    {
+      "id": "safetyRisk",
+      "label": "3. Safety / Risk Management",
+      "options": [
+        "Denies SI/HI",
+        "Safety plan completed/reviewed",
+        "Crisis resources provided (988)",
+        "ED precautions discussed",
+        "Lethal means counseling",
+        "Support system identified",
+        "Close monitoring indicated"
+      ]
+    },
+    {
+      "id": "levelOfCare",
+      "label": "4. Level of Care / Disposition",
+      "options": [
+        "Continue outpatient care",
+        "Refer to psychiatry",
+        "Intensive Outpatient Program (IOP)",
+        "Partial Hospitalization Program (PHP)",
+        "Voluntary inpatient admission",
+        "Involuntary commitment (if indicated)"
+      ]
+    },
+    {
+      "id": "diagnostics",
+      "label": "5. Diagnostics / Labs (if applicable)",
+      "options": [
+        "No labs indicated",
+        "Labs ordered",
+        "Urine drug screen",
+        "Metabolic monitoring (A1C, lipids)",
+        "Medication-specific labs"
+      ],
+      "hasText": ["Labs ordered", "Medication-specific labs"]
+    },
+    {
+      "id": "functional",
+      "label": "6. Functional / Social Interventions",
+      "options": [
+        "Encourage routine/structure",
+        "Address sleep hygiene",
+        "Work/school accommodations",
+        "Family involvement encouraged",
+        "Address psychosocial stressors",
+        "Case management referral"
+      ],
+      "hasText": ["Address psychosocial stressors"]
+    },
+    {
+      "id": "substanceUsePlan",
+      "label": "7. Substance Use (if applicable)",
+      "options": [
+        "Counseling provided",
+        "Harm reduction discussed",
+        "Refer to substance use treatment",
+        "MAT referral (if indicated)"
+      ]
+    },
+    {
+      "id": "followUp",
+      "label": "8. Follow-Up",
+      "options": [
+        "Return in 1 week",
+        "Return in 2–4 weeks",
+        "Return in 4–8 weeks",
+        "PRN / sooner if worsening",
+        "Coordination with other providers"
+      ]
+    },
+    {
+      "id": "education",
+      "label": "9. Patient Education / Informed Consent",
+      "options": [
+        "Risks/benefits discussed",
+        "Side effects reviewed",
+        "Black box warning discussed (if applicable)",
+        "Patient verbalized understanding"
+      ]
+    }
+  ]
+}
