@@ -2,9 +2,10 @@
   "mseCategories": [
     {
       "id": "appearance",
-      "label": "1. General Appearance",
+      "label": "General Appearance",
       "options": [
         "Well-groomed",
+        "Well Nourished",
         "Disheveled / unkempt",
         "Malodorous",
         "Appears stated age",
@@ -18,14 +19,12 @@
     },
     {
       "id": "behavior",
-      "label": "2. Behavior / Psychomotor Activity",
+      "label": "Behavior",
       "options": [
-        "Cooperative",
         "Calm",
+        "Cooperative",
+        "Irritable",
         "Agitated",
-        "Restless",
-        "Psychomotor retardation",
-        "Psychomotor agitation",
         "Guarded / evasive",
         "Withdrawn",
         "Hyperactive",
@@ -36,10 +35,24 @@
       ]
     },
     {
+      "id": "psychomotor",
+      "label": "Psychomotor Activity",
+      "options": [
+        "Psychomotor retardation",
+        "Psychomotor agitation",
+        "Restlessness",
+        "Fidgeting",
+        "Gait within normal limits",
+        "Gait not within normal limits"
+      ],
+      "hasText": ["Gait within normal limits", "Gait not within normal limits"]
+    },
+    {
       "id": "speech",
-      "label": "3. Speech",
+      "label": "Speech",
       "options": [
         "Normal rate, tone, and volume",
+        "Delayed",
         "Pressured",
         "Rapid",
         "Slow",
@@ -53,33 +66,36 @@
     },
     {
       "id": "mood",
-      "label": "4. Mood",
+      "label": "Mood",
       "options": [
         "Anxious",
         "Depressed",
         "Sad",
         "Angry / Irritable",
-        "Happy",
+        "Euthymic",
         "Euphoric"
       ],
       "allowCustom": true
     },
     {
       "id": "affect",
-      "label": "5. Affect",
+      "label": "Affect",
       "options": [
         "Restricted",
         "Blunted",
         "Flat",
         "Labile",
         "Appropriate",
+        "Inappropriate",
+        "Expansive",
         "Incongruent with mood"
       ]
     },
     {
       "id": "thoughtProcess",
-      "label": "6. Thought Process",
+      "label": "Thought Process",
       "options": [
+        "logical",
         "Linear",
         "Goal-directed",
         "Circumstantial",
@@ -93,8 +109,9 @@
     },
     {
       "id": "thoughtContent",
-      "label": "7. Thought Content",
+      "label": "Thought Content",
       "options": [
+        "No Delusions Noted",
         "No delusions",
         "Delusions: Paranoid",
         "Delusions: Grandiose",
@@ -110,9 +127,9 @@
     },
     {
       "id": "perception",
-      "label": "8. Perception",
+      "label": "Perception",
       "options": [
-        "No hallucinations",
+        "No hallucinations noted",
         "Auditory hallucinations",
         "Visual hallucinations",
         "Tactile hallucinations",
@@ -124,7 +141,7 @@
     },
     {
       "id": "cognition",
-      "label": "9. Cognition",
+      "label": "Cognition",
       "options": [
         "Alert and oriented ×4 (person, place, time, situation)",
         "Alert and oriented ×3",
@@ -137,7 +154,7 @@
     },
     {
       "id": "insight",
-      "label": "10. Insight",
+      "label": "Insight",
       "options": [
         "Good",
         "Fair",
@@ -148,7 +165,7 @@
     },
     {
       "id": "judgment",
-      "label": "11. Judgment",
+      "label": "Judgment",
       "options": [
         "Good",
         "Fair",
@@ -158,7 +175,7 @@
     },
     {
       "id": "impulseControl",
-      "label": "12. Impulse Control",
+      "label": "Impulse Control",
       "options": [
         "Good",
         "Fair",
@@ -168,7 +185,7 @@
     },
     {
       "id": "reliability",
-      "label": "13. Reliability",
+      "label": "Reliability",
       "options": [
         "Good historian",
         "Fair historian",
@@ -189,7 +206,6 @@
         "Excessive guilt",
         "Low energy / fatigue",
         "Poor concentration",
-        "Psychomotor retardation",
         "Crying spells",
         "Social withdrawal"
       ]
@@ -216,15 +232,14 @@
         "Sweating",
         "Trembling",
         "Shortness of breath",
-        "Muscle tension",
         "Nausea / abdominal distress",
         "Dizziness / lightheadedness",
         "Chills / heat sensations",
         "Paresthesias (tingling)",
         "Derealization / depersonalization",
-        "Excessive and uncontrollable worry",
         "Phobia"
-      ]
+      ],
+      "hasText": ["Phobia"]
     },
     {
       "id": "mania",
@@ -268,10 +283,9 @@
       "options": [
         "Insomnia – difficulty falling asleep",
         "Insomnia – difficulty staying asleep",
-        "Early morning awakening",
         "Hypersomnia",
         "Nightmares",
-        "Restless sleep",
+        "Restless sleep/Frequent awakening",
         "Non-restorative sleep"
       ]
     },
@@ -302,7 +316,7 @@
     },
     {
       "id": "trauma",
-      "label": "Trauma / PTSD",
+      "label": "STRESS RESPONSE",
       "options": [
         "History of trauma",
         "Intrusive thoughts",
@@ -335,7 +349,6 @@
         "Stimulant use",
         "Opioid use",
         "Sedative use",
-        "Increased tolerance",
         "Withdrawal symptoms",
         "Cravings"
       ]
@@ -370,27 +383,24 @@
   "planCategories": [
     {
       "id": "medications",
-      "label": "1. Medications",
+      "label": "Medications",
       "options": [
         "Continue current medications",
         "Initiate",
         "Adjust dose (↑ / ↓)",
         "Discontinue",
-        "Cross-taper to",
-        "PRN medication",
         "Side effects reviewed",
         "Medication adherence discussed"
       ],
-      "hasText": ["Continue current medications", "Initiate", "Adjust dose (↑ / ↓)", "Discontinue", "Cross-taper to", "PRN medication"]
+      "hasText": ["Continue current medications", "Initiate", "Adjust dose (↑ / ↓)", "Discontinue"]
     },
     {
       "id": "therapy",
-      "label": "2. Therapy / Psychosocial Interventions",
+      "label": "Therapy / Psychosocial Interventions",
       "options": [
         "Psychotherapy",
         "Reviewed coping skills",
         "Provided support",
-        "C",
         "Risk factor/Stress reduction strategies",
         "Psychoeducation provided"
       ],
@@ -400,83 +410,61 @@
     },
     {
       "id": "safetyRisk",
-      "label": "3. Safety / Risk Management",
+      "label": "Safety / Risk Management",
       "options": [
         "Denies SI/HI",
-        "Safety plan completed/reviewed",
-        "Crisis resources provided (988)",
-        "ED precautions discussed",
-        "Lethal means counseling",
-        "Support system identified",
-        "Close monitoring indicated"
+        "Safety plan/review",
+        "Crisis number provided",
+        "Discussed symptoms that would prompt visit to ED",
+        "Support system identified"
       ]
     },
     {
       "id": "levelOfCare",
-      "label": "4. Level of Care / Disposition",
+      "label": "Level of Care / Disposition",
       "options": [
-        "Continue outpatient care",
-        "Refer to psychiatry",
-        "Intensive Outpatient Program (IOP)",
-        "Partial Hospitalization Program (PHP)",
-        "Voluntary inpatient admission",
-        "Involuntary commitment (if indicated)"
+        "Involuntary commitment (if indicated)",
+        "Continue meet criteria for ACT services",
+        "Consent to the continuation of ACT services",
+        "Refer to substance abuse treatment program",
+        "Recommend inpatient admission"
       ]
     },
     {
       "id": "diagnostics",
-      "label": "5. Diagnostics / Labs (if applicable)",
+      "label": "Diagnostics / Labs (if applicable)",
       "options": [
         "No labs indicated",
-        "Labs ordered",
-        "Urine drug screen",
-        "Metabolic monitoring (A1C, lipids)",
-        "Medication-specific labs"
+        "Labs ordered"
       ],
-      "hasText": ["Labs ordered", "Medication-specific labs"]
+      "hasText": ["Labs ordered"]
     },
     {
       "id": "functional",
-      "label": "6. Functional / Social Interventions",
+      "label": "Functional / Social Interventions",
       "options": [
         "Encourage routine/structure",
-        "Address sleep hygiene",
-        "Work/school accommodations",
-        "Family involvement encouraged",
+        "Encourage sleep hygiene",
         "Address psychosocial stressors",
-        "Case management referral"
+        "Additional community resources reviewed"
       ],
       "hasText": ["Address psychosocial stressors"]
     },
     {
-      "id": "substanceUsePlan",
-      "label": "7. Substance Use (if applicable)",
-      "options": [
-        "Counseling provided",
-        "Harm reduction discussed",
-        "Refer to substance use treatment",
-        "MAT referral (if indicated)"
-      ]
-    },
-    {
       "id": "followUp",
-      "label": "8. Follow-Up",
+      "label": "Follow-Up",
       "options": [
-        "Return in 1 week",
-        "Return in 2–4 weeks",
-        "Return in 4–8 weeks",
+        "Plan to follow up in 4-6 weeks",
         "PRN / sooner if worsening",
-        "Coordination with other providers"
+        "Follow up with PCP as indicated"
       ]
     },
     {
       "id": "education",
-      "label": "9. Patient Education / Informed Consent",
+      "label": "Patient Education",
       "options": [
-        "Risks/benefits discussed",
-        "Side effects reviewed",
-        "Black box warning discussed (if applicable)",
-        "Patient verbalized understanding"
+        "Medications risks/benefits discussed",
+        "Black box warning discussed (if applicable)"
       ]
     }
   ]

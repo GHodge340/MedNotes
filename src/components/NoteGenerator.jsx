@@ -19,6 +19,7 @@ const groq = new OpenAI({
 function NoteGenerator() {
   const navigate = useNavigate();
   const [patientName, setPatientName] = useState('');
+  const [location, setLocation] = useState('');
   const [dateOfService, setDateOfService] = useState(new Date().toISOString().split('T')[0]);
   const [age, setAge] = useState('');
   const [sex, setSex] = useState('');
@@ -31,6 +32,24 @@ function NoteGenerator() {
   const [planTexts, setPlanTexts] = useState({});
   const [customMood, setCustomMood] = useState('');
   const [providerNotes, setProviderNotes] = useState('');
+  const [additionalNotes, setAdditionalNotes] = useState('');
+
+  // New States
+  const [reportedMood, setReportedMood] = useState({
+    mood: '',
+    endorse: '',
+    denies: '',
+    energy: '',
+    sleep: '',
+    appetite: ''
+  });
+  const [compliance, setCompliance] = useState('');
+  const [safety, setSafety] = useState({
+    sideEffect: '',
+    suicide: '',
+    homicide: '',
+    stressors: ''
+  });
   
   const [generatedReport, setGeneratedReport] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -63,7 +82,7 @@ function NoteGenerator() {
     const mseSummary = medData.mseCategories.map(cat => {
       let selections = mseSelections[cat.id] || [];
       if (cat.id === 'mood' && customMood) selections = [...selections, `"${customMood}"`];
-      return selections.length > 0 ? `${cat.label.split('. ')[1]}: ${selections.join(', ')}` : null;
+      return selections.length > 0 ? `${cat.label}: ${selections.join(', ')}` : null;
     }).filter(Boolean).join('\n');
 
     const rosSummary = medData.rosCategories.map(cat => {
@@ -79,6 +98,16 @@ function NoteGenerator() {
       return selections.length > 0 ? `${cat.label}: ${selections.join(', ')}` : null;
     }).filter(Boolean).join('\n');
 
+    const moodSummary = Object.entries(reportedMood)
+      .filter(([_, v]) => v)
+      .map(([k, v]) => `${k.charAt(0).toUpperCase() + k.slice(1)}: ${v}`)
+      .join(', ');
+
+    const safetySummary = Object.entries(safety)
+      .filter(([_, v]) => v)
+      .map(([k, v]) => `${k.charAt(0).toUpperCase() + k.slice(1)}: ${v}`)
+      .join(', ');
+
     // Use Local SLM if running in Electron, otherwise fallback to Gemini
     if (window.electronAPI) {
       try {
@@ -86,6 +115,9 @@ function NoteGenerator() {
         const result = await window.electronAPI.generateNote({
           patientName, age, sex, dateOfService, diagnosis,
           mseSummary, rosSummary, planSummary,
+          reportedMood: moodSummary,
+          compliance,
+          safety: safetySummary,
           providerNotes
         }, (status) => setGenerationStatus(status));
         setGeneratedReport(result);
@@ -100,51 +132,72 @@ function NoteGenerator() {
     }
 
     const prompt = `
-      You are a professional medical assistant. Based on the form data provided you are to generate report in a medical SOAP note (Subjective Objective Assessment Plan) format. 
-      A note disclaimer should be at the end of every generated note that states, "Portions of this note have been compiled using an AI-assisted documentation tool. The entirety of this record has been personally reviewed, edited, and verified by the undersigned for accuracy and clinical integrity. The final content reflects the provider’s independent medical judgment."
+      You are a professional medical assistant. Based on the form data provided, generate a medical clinical note in the EXACT format specified below.
 
-      Patient Details:
-      Name: ${patientName}
+      DATA PROVIDED:
+      Patient Name/ID: ${patientName}
       Age: ${age}
       Sex: ${sex}
       Date: ${dateOfService}
+      Location: ${location}
       Diagnosis: ${diagnosis}
+
+      Subjective Data:
+      - Mood: ${reportedMood.mood}
+      - Endorse: ${reportedMood.endorse}
+      - Denies: ${reportedMood.denies}
+      - Energy: ${reportedMood.energy}
+      - Sleep: ${reportedMood.sleep}
+      - Appetite: ${reportedMood.appetite}
+      - Compliance: ${compliance}
+      - Side Effects: ${safety.sideEffect}
+      - Suicide Screening: ${safety.suicide}
+      - Homicide Screening: ${safety.homicide}
+      - Stressors: ${safety.stressors}
       
-      Mental Status Exam Selections:
+      Review of Symptoms (ROS):
+      ${rosSummary}
+
+      Mental Status Exam (MSE):
       ${mseSummary}
       
-      Review of Symptoms Selections:
-      ${rosSummary}
+      Assessment (Provider Notes):
+      ${providerNotes}
       
       Plan Selections:
       ${planSummary}
+
+      Additional Notes:
+      ${additionalNotes}
       
-      Provider's Clinical Assessment:
+      REQUIRED OUTPUT FORMAT (Follow this exactly, do not add extra preamble or conversational filler):
+
+      **SUBJECTIVE**
+      Patient, ${patientName} is a ${age} year old ${sex} seen at ${location} on ${dateOfService} for follow-up of ${diagnosis} care. ${patientName} reports mood as ${reportedMood.mood}. ${patientName} also endorses ${reportedMood.endorse} and denies ${reportedMood.denies}. Sleep is ${reportedMood.sleep} and appetite is ${reportedMood.appetite}. ${patientName} reports ${compliance} to medication with ${safety.sideEffect} of side effects. ${patientName} [states they 'deny' or 'endorse' based on Suicide Screening data] suicidal ideations and [states they 'deny' or 'endorse' based on Homicide Screening data] homicidal ideations. ${patientName} identifies stressors including ${safety.stressors}.
+
+      **MENTAL STATUS EXAM**
+      [List the MSE categories and their selected findings in this format: "Category Title: Selected Finding, Selected Finding 1"]
+
+      **REVIEW OF SYMPTOMS**
+      [List the ROS categories. For each category that has selections, list the findings. Use clear clinical language.]
+
+      **ASSESSMENT**
       ${providerNotes}
-      
-      TASK:
-      1. Generate a "Report Format" paragraph:
-      "[Patient name] is a [age]-year-old [male/female] seen on [date] for a follow-up of [diagnosis]. [Patient name] has reported [summary based on REVIEW OF SYMPTOMS]. [Patient name] also reports [adherence/non-adherence based on PLAN] to medications with the [presence/absence based on PLAN/PROVIDER ASSESSMENT] of side effects. [Patient name] [acknowledges/denies based on PLAN/PROVIDER ASSESSMENT] stressors, suicidal/homicidal feelings, unmet needs and/or medication issues."
 
-      2. Generate a structured "Note Review" that should have a Layout with these sections:
-      - [SOAP REPORT] (Subjective, Objective, Assessment, Plan sections)
-      - [MENTAL STATUS EXAM SUMMARY]
-      - [REVIEW OF SYMPTOMS SUMMARY]
-      - [PROVIDER ASSESSMENT SUMMARY]
-      - [PLAN SUMMARY]
-      - [NOTE DISCLAIMER]
+      **PLAN**
+      [Generate a suggested clinical plan based on the 'Plan Selections' and incorporate any specific directives from 'Additional Notes' ("${additionalNotes}"). Ensure it reads as a coherent clinical plan.]
 
-      STYLE: Professional, concise, clinical, and objective. Use medical terminology.
+      Note Disclaimer: Portions of this note have been compiled using an AI-assisted documentation tool. The entirety of this record has been personally reviewed, edited, and verified by the undersigned for accuracy and clinical integrity. The final content reflects the provider’s independent medical judgment.
     `;
 
     try {
       
       //Groq API call
-      const result = await groq.responses.create({
+      const result = await groq.chat.completions.create({
       model: "llama-3.1-8b-instant",
-      input: prompt,
+      messages: [{ role: "user", content: prompt }],
     });
-      const text = result.output_text;
+      const text = result.choices[0].message.content;
       setGeneratedReport(text);
     } catch (error) {
       console.error("AI Generation Error:", error);
@@ -211,7 +264,7 @@ function NoteGenerator() {
             ))}
             {cat.allowCustom && (
               <div className="custom-input">
-                <label>Specific Mood:</label>
+                <label>Other:</label>
                 <input 
                   type="text" 
                   value={customMood} 
@@ -241,34 +294,112 @@ function NoteGenerator() {
       <main className="generator-layout">
         <section className="input-section">
           <div className="form-card">
-            <h2>Patient Demographics</h2>
-            <div className="input-row">
-              <div className="input-group">
-                <label>Initials/Alias/ID#</label>
-                <input type="text" value={patientName} onChange={(e) => setPatientName(e.target.value)} placeholder="Name" />
+            <h2>Subjective</h2>
+            
+            <div className="subsection">
+              <h3>Patient Details</h3>
+              <div className="input-row-narrow">
+                <div className="input-group">
+                  <label>ID#</label>
+                  <input type="text" value={patientName} onChange={(e) => setPatientName(e.target.value)} placeholder="Name" />
+                </div>
+                <div className="input-group">
+                  <label>Date</label>
+                  <input type="date" value={dateOfService} onChange={(e) => setDateOfService(e.target.value)} />
+                </div>
+                <div className="input-group">
+                  <label>Location</label>
+                  <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="Location" />
+                </div>
+                <div className="input-group">
+                  <label>Age</label>
+                  <input type="number" value={age} onChange={(e) => setAge(e.target.value)} placeholder="Age" />
+                </div>
               </div>
-              <div className="input-group">
-                <label>Visit Date</label>
-                <input type="date" value={dateOfService} onChange={(e) => setDateOfService(e.target.value)} />
+              <div className="input-row-narrow">
+                <div className="input-group">
+                  <label>Sex</label>
+                  <div className="radio-group-horizontal">
+                    <label><input type="radio" name="sex" value="male" checked={sex === 'male'} onChange={(e) => setSex(e.target.value)} /> M</label>
+                    <label><input type="radio" name="sex" value="female" checked={sex === 'female'} onChange={(e) => setSex(e.target.value)} /> F</label>
+                  </div>
+                </div>
+                <div className="input-group span-3">
+                  <label>Diagnosis</label>
+                  <input type="text" value={diagnosis} onChange={(e) => setDiagnosis(e.target.value)} placeholder="ICD-10 Code / Description" />
+                </div>
               </div>
             </div>
-            <div className="input-row">
-              <div className="input-group">
-                <label>Age</label>
-                <input type="number" value={age} onChange={(e) => setAge(e.target.value)} placeholder="Age" />
+
+            <div className="subsection">
+              <h3>Reported Mood</h3>
+              <div className="input-row-narrow">
+                <div className="input-group">
+                  <label>Mood</label>
+                  <input type="text" value={reportedMood.mood} onChange={(e) => setReportedMood({...reportedMood, mood: e.target.value})} placeholder="Patient's mood..." />
+                </div>
+                <div className="input-group">
+                  <label>Endorse</label>
+                  <input type="text" value={reportedMood.endorse} onChange={(e) => setReportedMood({...reportedMood, endorse: e.target.value})} placeholder="e.g. Anxiety" />
+                </div>
+                <div className="input-group">
+                  <label>Denies</label>
+                  <input type="text" value={reportedMood.denies} onChange={(e) => setReportedMood({...reportedMood, denies: e.target.value})} placeholder="e.g. Depression" />
+                </div>
+                <div className="input-group">
+                  <label>Energy</label>
+                  <input type="text" value={reportedMood.energy} onChange={(e) => setReportedMood({...reportedMood, energy: e.target.value})} placeholder="e.g. Good" />
+                </div>
               </div>
-              <div className="input-group">
-                <label>Sex</label>
-                <select value={sex} onChange={(e) => setSex(e.target.value)}>
-                  <option value="">Select</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
-                </select>
+              <div className="input-row-narrow">
+                <div className="input-group">
+                  <label>Sleep</label>
+                  <input type="text" value={reportedMood.sleep} onChange={(e) => setReportedMood({...reportedMood, sleep: e.target.value})} placeholder="e.g. 6-7 hrs" />
+                </div>
+                <div className="input-group">
+                  <label>Appetite</label>
+                  <input type="text" value={reportedMood.appetite} onChange={(e) => setReportedMood({...reportedMood, appetite: e.target.value})} placeholder="e.g. Normal" />
+                </div>
               </div>
-              <div className="input-group">
-                <label>Diagnosis</label>
-                <input type="text" value={diagnosis} onChange={(e) => setDiagnosis(e.target.value)} placeholder="ICD-10 Code / Description" />
+            </div>
+
+            <div className="subsection">
+              <h3>Compliance & Safety</h3>
+              <div className="compliance-section">
+                <label className="sub-label">Medication Compliance</label>
+                <div className="radio-group-horizontal">
+                  <label><input type="radio" name="compliance" value="Compliance" checked={compliance === 'Compliance'} onChange={(e) => setCompliance(e.target.value)} /> Compliance</label>
+                  <label><input type="radio" name="compliance" value="Non-Compliance" checked={compliance === 'Non-Compliance'} onChange={(e) => setCompliance(e.target.value)} /> Non-Compliance</label>
+                  <label><input type="radio" name="compliance" value="Partial Compliance" checked={compliance === 'Partial Compliance'} onChange={(e) => setCompliance(e.target.value)} /> Partial Compliance</label>
+                </div>
+              </div>
+              
+              <div className="safety-grid">
+                <div className="safety-item">
+                  <label>Side Effects</label>
+                  <div className="radio-group-horizontal">
+                    <label><input type="radio" name="sideEffect" value="Not Present" checked={safety.sideEffect === 'Not Present'} onChange={(e) => setSafety({...safety, sideEffect: e.target.value})} /> Not Present</label>
+                    <label><input type="radio" name="sideEffect" value="Present" checked={safety.sideEffect === 'Present'} onChange={(e) => setSafety({...safety, sideEffect: e.target.value})} /> Present</label>
+                  </div>
+                </div>
+                <div className="safety-item">
+                  <label>Suicide</label>
+                  <div className="radio-group-horizontal">
+                    <label><input type="radio" name="suicide" value="Deny" checked={safety.suicide === 'Deny'} onChange={(e) => setSafety({...safety, suicide: e.target.value})} /> Deny</label>
+                    <label><input type="radio" name="suicide" value="Endorse" checked={safety.suicide === 'Endorse'} onChange={(e) => setSafety({...safety, suicide: e.target.value})} /> Endorse</label>
+                  </div>
+                </div>
+                <div className="safety-item">
+                  <label>Homicide</label>
+                  <div className="radio-group-horizontal">
+                    <label><input type="radio" name="homicide" value="Deny" checked={safety.homicide === 'Deny'} onChange={(e) => setSafety({...safety, homicide: e.target.value})} /> Deny</label>
+                    <label><input type="radio" name="homicide" value="Endorse" checked={safety.homicide === 'Endorse'} onChange={(e) => setSafety({...safety, homicide: e.target.value})} /> Endorse</label>
+                  </div>
+                </div>
+              </div>
+              <div className="input-group" style={{marginTop: '1.5rem'}}>
+                <label>Stressors</label>
+                <input type="text" value={safety.stressors} onChange={(e) => setSafety({...safety, stressors: e.target.value})} placeholder="e.g. Financial, family, etc." />
               </div>
             </div>
           </div>
@@ -277,7 +408,7 @@ function NoteGenerator() {
           {renderCheckboxGroup(medData.rosCategories, rosSelections, setRosSelections, "Review of Symptoms")}
           
           <div className="form-card">
-            <h2>Provider Assessment</h2>
+            <h2>Assessment</h2>
             <p className="hint">Describe the visit and assessment in raw detail. MedNotes AI will use this to generate professional clinical narratives.</p>
             <textarea 
               className="notes-area large"
@@ -288,6 +419,17 @@ function NoteGenerator() {
           </div>
 
           {renderCheckboxGroup(medData.planCategories, planSelections, setPlanSelections, "Plan")}
+
+          <div className="form-card">
+            <h2>Additional Notes</h2>
+            <p className="hint">Include any additional clinical information or specific requests for the generated note.</p>
+            <textarea 
+              className="notes-area large"
+              value={additionalNotes}
+              onChange={(e) => setAdditionalNotes(e.target.value)}
+              placeholder="e.g. Any other relevant details..."
+            />
+          </div>
 
           <button className="generate-btn" onClick={generateReport} disabled={isGenerating}>
             {isGenerating ? (

@@ -174,17 +174,118 @@ body {
 .form-card h2 {
   font-size: 1.25rem;
   color: var(--primary);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 2px solid var(--primary);
   padding-bottom: 0.75rem;
   margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.subsection {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px dashed var(--border);
+}
+
+.subsection:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.subsection h3 {
+  font-size: 1rem;
+  color: var(--text-dark);
   margin-bottom: 1.25rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sub-label {
+  display: block;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--secondary);
+  margin-bottom: 0.5rem;
+  font-weight: 700;
 }
 
 .input-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.input-row-narrow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 1200px) {
+  .input-row-narrow {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .input-row, .input-row-narrow {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+.input-group.span-3 {
+  grid-column: span 3;
+}
+
+.radio-group-horizontal {
+  display: flex;
   gap: 1rem;
-  margin-bottom: 1rem;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.radio-group-horizontal label {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  font-weight: normal;
+  color: var(--text-dark);
+}
+
+.compliance-section {
+  margin-bottom: 1.5rem;
+}
+
+.compliance-section h3 {
+  font-size: 0.9rem;
+  color: var(--secondary);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.safety-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+  border-top: 1px solid var(--border);
+  padding-top: 1.5rem;
+}
+
+.safety-item label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
 }
 
 .input-group label {
