@@ -87,8 +87,21 @@ function NoteGenerator() {
 
     const rosSummary = medData.rosCategories.map(cat => {
       const selections = rosSelections[cat.id] || [];
-      return selections.length > 0 ? `${cat.label}: ${selections.join(', ')}` : null;
-    }).filter(Boolean).join('\n');
+      const optionsList = cat.options.map(opt => {
+        const isSelected = selections.includes(opt);
+        let optText = `${isSelected ? '[x]' : '[ ]'} ${opt}`;
+        
+        if (cat.nested && cat.nested[opt]) {
+          const nestedOptions = cat.nested[opt].map(nestedOpt => {
+            const isNestedSelected = selections.includes(`${opt}: ${nestedOpt}`);
+            return `\n    ${isNestedSelected ? '[x]' : '[ ]'} ${nestedOpt}`;
+          }).join('');
+          optText += nestedOptions;
+        }
+        return optText;
+      }).join('\n  ');
+      return `${cat.label}\n  ${optionsList}`;
+    }).join('\n\n');
 
     const planSummary = medData.planCategories.map(cat => {
       const selections = (planSelections[cat.id] || []).map(opt => {
@@ -108,12 +121,16 @@ function NoteGenerator() {
       .map(([k, v]) => `${k.charAt(0).toUpperCase() + k.slice(1)}: ${v}`)
       .join(', ');
 
+    // Format date as mm/dd/yyyy
+    const [year, month, day] = dateOfService.split('-');
+    const formattedDate = `${month}/${day}/${year}`;
+
     // Use Local SLM if running in Electron, otherwise fallback to Gemini
     if (window.electronAPI) {
       try {
         setGenerationStatus('Initializing local engine...');
         const result = await window.electronAPI.generateNote({
-          patientName, age, sex, dateOfService, diagnosis,
+          patientName, age, sex, dateOfService: formattedDate, diagnosis,
           mseSummary, rosSummary, planSummary,
           reportedMood: moodSummary,
           compliance,
@@ -138,7 +155,7 @@ function NoteGenerator() {
       Patient Name/ID: ${patientName}
       Age: ${age}
       Sex: ${sex}
-      Date: ${dateOfService}
+      Date: ${formattedDate}
       Location: ${location}
       Diagnosis: ${diagnosis}
 
@@ -173,13 +190,13 @@ function NoteGenerator() {
       REQUIRED OUTPUT FORMAT (Follow this exactly, do not add extra preamble or conversational filler):
 
       **SUBJECTIVE**
-      Patient, ${patientName} is a ${age} year old ${sex} seen at ${location} on ${dateOfService} for follow-up of ${diagnosis} care. ${patientName} reports mood as ${reportedMood.mood}. ${patientName} also endorses ${reportedMood.endorse} and denies ${reportedMood.denies}. Sleep is ${reportedMood.sleep} and appetite is ${reportedMood.appetite}. ${patientName} reports ${compliance} to medication with ${safety.sideEffect} of side effects. ${patientName} [states they 'deny' or 'endorse' based on Suicide Screening data] suicidal ideations and [states they 'deny' or 'endorse' based on Homicide Screening data] homicidal ideations. ${patientName} identifies stressors including ${safety.stressors}.
+      Patient, ${patientName} is a ${age} year old ${sex} seen at ${location} on ${formattedDate} for follow-up of ${diagnosis}. ${patientName} reports mood as ${reportedMood.mood}. ${patientName} also endorses ${reportedMood.endorse} and denies ${reportedMood.denies}. Sleep is ${reportedMood.sleep} and appetite is ${reportedMood.appetite}. ${patientName} reports ${compliance} to medication with ${safety.sideEffect} of side effects. ${patientName} [states they 'deny' or 'endorse' based on Suicide Screening data] suicidal ideations and [states they 'deny' or 'endorse' based on Homicide Screening data] homicidal ideations. ${patientName} identifies stressors including ${safety.stressors}.
 
       **MENTAL STATUS EXAM**
       [List the MSE categories and their selected findings in this format: "Category Title: Selected Finding, Selected Finding 1"]
 
       **REVIEW OF SYMPTOMS**
-      [List the ROS categories. For each category that has selections, list the findings. Use clear clinical language.]
+      ${rosSummary}
 
       **ASSESSMENT**
       ${providerNotes}

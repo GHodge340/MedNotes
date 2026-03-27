@@ -42,10 +42,10 @@
         "Psychomotor agitation",
         "Restlessness",
         "Fidgeting",
-        "Gait within normal limits",
+        "Gait",
         "Gait not within normal limits"
       ],
-      "hasText": ["Gait within normal limits", "Gait not within normal limits"]
+      "hasText": ["Gait not within normal limits"]
     },
     {
       "id": "speech",
@@ -112,7 +112,6 @@
       "label": "Thought Content",
       "options": [
         "No Delusions Noted",
-        "No delusions",
         "Delusions: Paranoid",
         "Delusions: Grandiose",
         "Delusions: Persecutory",
@@ -346,6 +345,7 @@
       "options": [
         "Alcohol use",
         "Cannabis use",
+        "Nicotine/tobacco",
         "Stimulant use",
         "Opioid use",
         "Sedative use",
