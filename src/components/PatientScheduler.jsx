@@ -66,9 +66,9 @@ function PatientScheduler() {
   };
 
   const clearAll = () => {
-    if (window.confirm("Are you sure you want to clear all patients? This will reset to the template.")) {
-      setPatients(templateData.map(p => calculateDates(p)));
-      localStorage.removeItem('mednotes_patients');
+    if (window.confirm("Are you sure you want to clear all patients? This will permanently delete the current list.")) {
+      setPatients([]);
+      localStorage.setItem('mednotes_patients', JSON.stringify([]));
     }
   };
 
@@ -93,13 +93,30 @@ function PatientScheduler() {
     const reader = new FileReader();
     reader.onload = (event) => {
       const text = event.target.result;
-      const lines = text.split('\n').slice(1);
-      const parsed = lines.map(line => {
-        const [name, lastSeen, notes] = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(item => item.replace(/"/g, ''));
-        return { name: name || '', lastSeen: lastSeen || '', notes: notes || '' };
+      const lines = text.split(/\r?\n/).filter(line => line.trim());
+      if (lines.length === 0) return;
+      
+      // Basic header detection - if first line contains common keywords, skip it
+      const firstLine = lines[0].toLowerCase();
+      const hasHeader = firstLine.includes('name') || firstLine.includes('seen') || firstLine.includes('notes') || firstLine.includes('member');
+      const dataLines = hasHeader ? lines.slice(1) : lines;
+
+      const parsed = dataLines.map(line => {
+        // Split by comma but respect quotes
+        const parts = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+        const name = (parts[0] || '').replace(/^"|"$/g, '').trim();
+        const lastSeen = (parts[1] || '').replace(/^"|"$/g, '').trim();
+        const notes = (parts[2] || '').replace(/^"|"$/g, '').trim();
+        return { name, lastSeen, notes };
       }).filter(p => p.name);
-      setPatients(parsed.map(p => calculateDates(p)));
-      saveToLocal(parsed);
+
+      const calculated = parsed.map(p => calculateDates(p));
+      const updated = [...patients, ...calculated];
+      setPatients(updated);
+      saveToLocal(updated);
+      
+      // Reset file input so same file can be imported again
+      if (fileInputRef.current) fileInputRef.current.value = '';
     };
     reader.readAsText(file);
   };
@@ -154,13 +171,55 @@ function PatientScheduler() {
         <div className="action-btns">
           <input type="file" ref={fileInputRef} onChange={importCSV} accept=".csv" style={{ display: 'none' }} />
           <button className="add-btn" onClick={() => setShowAddForm(true)}><UserPlus size={18} /> Add</button>
-          <button className="clear-btn" onClick={() => fileInputRef.current.click()}><Upload size={18} /> Import</button>
-          <button className="clear-btn" onClick={downloadCSV}><Download size={18} /> Export</button>
+          <button className="action-btn" onClick={() => fileInputRef.current.click()}><Upload size={18} /> Import</button>
+          <button className="action-btn" onClick={downloadCSV}><Download size={18} /> Export</button>
           <button className="clear-btn" onClick={clearAll}><Trash2 size={18} /> Clear</button>
         </div>
       </div>
       
-      {/* ... (rest of the component structure, including modal and table) ... */}
+      {showAddForm && (
+        <div className="modal-overlay">
+          <div className="add-form-card">
+            <div className="modal-header">
+              <h3>Add New Patient</h3>
+              <button onClick={() => setShowAddForm(false)} className="close-modal-btn"><X size={20} /></button>
+            </div>
+            <form onSubmit={addPatient}>
+              <div className="input-group" style={{ marginBottom: '1.25rem' }}>
+                <label>Member Name</label>
+                <input 
+                  type="text" 
+                  value={newPatient.name} 
+                  onChange={(e) => setNewPatient({ ...newPatient, name: e.target.value })}
+                  placeholder="Last Name, First Name"
+                  required
+                  autoFocus
+                />
+              </div>
+              <div className="input-group" style={{ marginBottom: '1.25rem' }}>
+                <label>Last Seen Date</label>
+                <input 
+                  type="date" 
+                  value={newPatient.lastSeen} 
+                  onChange={(e) => setNewPatient({ ...newPatient, lastSeen: e.target.value })}
+                />
+              </div>
+              <div className="input-group" style={{ marginBottom: '1.5rem' }}>
+                <label>Initial Clinical Notes</label>
+                <input 
+                  type="text" 
+                  value={newPatient.notes} 
+                  onChange={(e) => setNewPatient({ ...newPatient, notes: e.target.value })}
+                  placeholder="Optional notes or observations"
+                />
+              </div>
+              <div className="modal-actions">
+                <button type="submit" className="submit-add-btn">Add to Schedule</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
       <div className="table-wrapper">
         <table className="patient-table">
           <thead>

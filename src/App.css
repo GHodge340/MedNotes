@@ -73,6 +73,27 @@ body {
   gap: 1.5rem;
   width: 100%;
   max-width: 800px;
+  margin-bottom: 2rem;
+}
+
+.download-standalone-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--secondary);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-family: inherit;
+}
+
+.download-standalone-btn:hover {
+  background: #475569;
 }
 
 .cta-card {
@@ -448,7 +469,7 @@ body {
   gap: 1rem;
 }
 
-.add-btn, .clear-btn {
+.add-btn, .clear-btn, .action-btn {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -462,6 +483,9 @@ body {
 
 .add-btn { background: var(--primary); color: white; }
 .add-btn:hover { background: var(--primary-hover); }
+
+.action-btn { background: white; border: 1px solid var(--border); color: var(--text-muted); }
+.action-btn:hover { background: #f1f5f9; color: var(--primary); }
 
 .clear-btn { background: white; border: 1px solid var(--error); color: var(--error); }
 .clear-btn:hover { background: #fee2e2; }

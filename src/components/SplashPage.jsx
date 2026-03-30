@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FileText, Calendar, ShieldCheck } from 'lucide-react';
+import { FileText, Calendar, ShieldCheck, Download } from 'lucide-react';
 
 function SplashPage() {
   const navigate = useNavigate();
@@ -27,6 +27,14 @@ function SplashPage() {
             <p>Interactive patient tracker with automated visit calculations and clinical notes.</p>
           </button>
         </div>
+
+        <button 
+          className="download-standalone-btn" 
+          onClick={() => window.open('https://www.mediafire.com/file/7zxhir4ts52e6f4/MedNotes+AI+1.0.0.exe/file', '_blank')}
+        >
+          <Download size={18} />
+          Download Windows Standalone App (Offline Mode)
+        </button>
       </div>
       
       <footer className="splash-footer">
