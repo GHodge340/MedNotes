@@ -38,6 +38,8 @@
       "id": "psychomotor",
       "label": "Psychomotor Activity",
       "options": [
+        "no concerns noted",
+        "WNL to gait",
         "Psychomotor retardation",
         "Psychomotor agitation",
         "Restlessness",
@@ -95,7 +97,7 @@
       "id": "thoughtProcess",
       "label": "Thought Process",
       "options": [
-        "logical",
+        "Logical",
         "Linear",
         "Goal-directed",
         "Circumstantial",
@@ -111,6 +113,7 @@
       "id": "thoughtContent",
       "label": "Thought Content",
       "options": [
+        "No delusions or paranoia noted",
         "No Delusions Noted",
         "Delusions: Paranoid",
         "Delusions: Grandiose",
@@ -345,7 +348,7 @@
       "options": [
         "Alcohol use",
         "Cannabis use",
-        "Nicotine/tobacco",
+        "Nicotine/tobacco use",
         "Stimulant use",
         "Opioid use",
         "Sedative use",
